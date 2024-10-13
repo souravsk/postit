@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: sourav
+      POSTGRES_PASSWORD: sourav
+      POSTGRES_DB: user_auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  auth:
+    build:
+      context: ./user_auth # Correct path to the Dockerfile folder
+    container_name: go_auth
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: sourav
+      DB_PASSWORD: sourav
+      DB_NAME: user_auth_db
+
+volumes:
+  pgdata:

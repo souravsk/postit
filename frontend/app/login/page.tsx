@@ -39,7 +39,11 @@ export default function AuthPage() {
           <h1 className="text-3xl font-bold mb-4 text-center">
             {isSignUp ? "Sign Up" : "Welcome to PostIt"}
           </h1>
-          {isSignUp ? <SignupForm /> : <LoginForm />}
+          {isSignUp ? (
+            <SignupForm onSignupSuccess={() => setIsSignUp(false)} />
+          ) : (
+            <LoginForm />
+          )}
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
